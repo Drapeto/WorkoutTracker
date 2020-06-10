@@ -3,25 +3,17 @@ const workoutModel = require("../workoutModel");
 module.exports = function (app) {
 
     // home route index  GET
-    app.get("/", (req, res) => {
-        res.sendFile(path.join(_dirname, "./public", "index.html"));
-    });
-
-
-    // GET route excersise
-    app.get("/exercise", (req, res) => {
-        res.sendFile(path.join(_dirname, "./public", "exercise.html"));
-    });
-
-    //  GET route for /stats
-
-    app.get("/stats", (req, res) => {
-        res.sendFile(path.join(_dirname, "./public", "stats.html"));
-    });
+    
 
     // Get route for api/workouts/range ***
     app.get("/api/workouts/range", (req, res) => {
-        workoutModel.create(body).then(function (data) {
+        workoutModel.find().limit(7).then(function (data) {
+            res.json(data);
+        });
+    });
+
+    app.get("/api/workouts", (req, res) => {
+        workoutModel.find().then(function (data) {
             res.json(data);
         });
     });
@@ -52,5 +44,5 @@ module.exports = function (app) {
             });
     });
 
-    // POST workout ****
+
 };
